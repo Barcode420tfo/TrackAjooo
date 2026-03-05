@@ -2,9 +2,29 @@
 
 // API base URL. Set window.TRACKAJO_API_BASE before this script to override.
 var VITE_API_BASE = (import.meta && import.meta.env && import.meta.env.VITE_API_BASE) || '';
+var IS_LOCAL = window.location.hostname === 'localhost';
 var API_BASE = window.TRACKAJO_API_BASE
     || VITE_API_BASE
-    || (window.location.hostname === 'localhost' ? 'http://localhost:5000' : 'https://trackajo-api.onrender.com');
+    || (IS_LOCAL ? 'http://localhost:5000' : '');
+
+function parseResponse(res) {
+    return res.text().then(function(text) {
+        var data = {};
+        if (text) {
+            try {
+                data = JSON.parse(text);
+            } catch (e) {
+                data = {};
+            }
+        }
+
+        if (!res.ok) {
+            throw new Error(data.message || ('Request failed (' + res.status + ')'));
+        }
+
+        return data;
+    });
+}
 
 // ============ Navbar Component ============
 function Navbar(props) {
@@ -48,6 +68,11 @@ function SignupForm() {
         e.preventDefault();
         setError('');
 
+        if (!API_BASE) {
+            setError('Service unavailable: API URL is not configured.');
+            return;
+        }
+
         if (!email.trim() && !phone.trim()) {
             setError('Please enter your email or phone number.');
             return;
@@ -65,7 +90,7 @@ function SignupForm() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email: email.trim(), phone: phone.trim() })
         })
-        .then(function(res) { return res.json(); })
+        .then(parseResponse)
         .then(function(data) {
             setLoading(false);
             if (data.success) {
@@ -74,9 +99,9 @@ function SignupForm() {
                 setError(data.message || 'Something went wrong. Please try again.');
             }
         })
-        .catch(function() {
+        .catch(function(err) {
             setLoading(false);
-            setError('Unable to connect. Please try again later.');
+            setError(err && err.message ? err.message : 'Unable to connect. Please try again later.');
         });
     }
 
@@ -353,8 +378,12 @@ function App() {
     var setWaitlistCount = countState[1];
 
     React.useEffect(function() {
+        if (!API_BASE) {
+            return;
+        }
+
         fetch(API_BASE + '/api/waitlist/count')
-            .then(function(res) { return res.json(); })
+            .then(parseResponse)
             .then(function(data) {
                 if (data.success) {
                     setWaitlistCount(data.count);
