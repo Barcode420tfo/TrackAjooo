@@ -13,6 +13,9 @@
   "author": "",
   "license": "ISC",
   "packageManager": "pnpm@10.10.0",
+  "dependencies": {
+    "mongoose": "^8.0.3"
+  },
   "devDependencies": {
     "vite": "^6.3.5"
   }
