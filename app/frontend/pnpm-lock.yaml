@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      bson:
+        specifier: ^7.2.0
+        version: 7.2.0
       mongoose:
         specifier: ^8.0.3
         version: 8.23.0
@@ -294,6 +297,10 @@ packages:
   bson@6.10.4:
     resolution: {integrity: sha512-WIsKqkSC0ABoBJuT1LEX+2HEvNmNKKgnTAyd0fL8qzK4SH2i9NXg+t08YtdZp/V9IZ33cxe3iV4yM0qg8lMQng==}
     engines: {node: '>=16.20.1'}
+
+  bson@7.2.0:
+    resolution: {integrity: sha512-YCEo7KjMlbNlyHhz7zAZNDpIpQbd+wOEHJYezv0nMYTn4x31eIUM2yomNNubclAt63dObUzKHWsBLJ9QcZNSnQ==}
+    engines: {node: '>=20.19.0'}
 
   debug@4.4.3:
     resolution: {integrity: sha512-RGwwWnwQvkVfavKVt22FGLw+xYSdzARwm0ru6DhTVA3umU5hZc28V3kO4stgYryrTlLpuvgI9GiijltAjNbcqA==}
@@ -615,6 +622,8 @@ snapshots:
       '@types/webidl-conversions': 7.0.3
 
   bson@6.10.4: {}
+
+  bson@7.2.0: {}
 
   debug@4.4.3:
     dependencies:
