@@ -68,11 +68,6 @@ function SignupForm() {
         e.preventDefault();
         setError('');
 
-        if (!API_BASE) {
-            setError('Service unavailable: API URL is not configured.');
-            return;
-        }
-
         if (!email.trim() && !phone.trim()) {
             setError('Please enter your email or phone number.');
             return;
@@ -378,10 +373,6 @@ function App() {
     var setWaitlistCount = countState[1];
 
     React.useEffect(function() {
-        if (!API_BASE) {
-            return;
-        }
-
         fetch(API_BASE + '/api/waitlist/count')
             .then(parseResponse)
             .then(function(data) {
