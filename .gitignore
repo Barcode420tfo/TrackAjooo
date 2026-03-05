@@ -21,6 +21,7 @@ ENV/
 *.iml
 .vscode/
 .vscode/extensions.json
+.pnpm-store/
 .temp/
 *.tmp
 coverage/

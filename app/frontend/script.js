@@ -1,7 +1,3 @@
-import dotenv from "dotenv";
-dotenv.config();
-
-
 // TrackAjo Waitlist Landing Page - Pure JavaScript with React
 
 // API base URL. Set window.TRACKAJO_API_BASE before this script to override.
