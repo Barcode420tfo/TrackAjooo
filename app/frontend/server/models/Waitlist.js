@@ -37,4 +37,4 @@ waitlistSchema.pre('validate', function(next) {
     }
 });
 
-module.exports = mongoose.model('Waitlist', waitlistSchema);
+module.exports = mongoose.models.Waitlist || mongoose.model('Waitlist', waitlistSchema);
